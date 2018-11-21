@@ -126,6 +126,12 @@ Resources:
             - SourceContainer: simple-app
           Command:
             - /bin/sh -c "while true; do /bin/date > /var/www/my-vol/date; sleep 1; done"
+            - curl -L https://download.newrelic.com/php_agent/release/newrelic-php5-8.3.0.226-linux.tar.gz | tar -C /usr/sbin -zx 
+            - \ NR_INSTALL_USE_CP_NOT_LN=1 NR_INSTALL_SILENT=1 /usr/sbin/newrelic-php5-*/newrelic-install install 
+            - \ rm -rf /usr/sbin/newrelic-php5-* /usr/sbin/nrinstall* 
+            - \ sed -i -e 's/"REPLACE_WITH_REAL_KEY"/"eu01xxd6f74796b9d6f1e33484dbcce588f539ff"/' \ -e 's/newrelic.appname = "PHP Application"/newrelic.appname = "Tesltra App"/' \ /usr/local/etc/php/conf.d/newrelic.ini
+
+            
       Volumes:
         - Name: my-vol
 
